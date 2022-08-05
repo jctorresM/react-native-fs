@@ -889,6 +889,8 @@ public class RNFSManager extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void getFSInfo(Promise promise) {
+    String path = Environment.getExternalStorageDirectory().getPath();
+    String absolutePath = Environment.getExternalStorageDirectory().getAbsolutePath();
     File path = Environment.getDataDirectory();
     StatFs stat = new StatFs(path.getPath());
     StatFs statEx = null;
@@ -920,7 +922,8 @@ public class RNFSManager extends ReactContextBaseJavaModule {
     info.putDouble("totalSpaceEx", (double) totalSpaceEx);
     info.putDouble("freeSpaceEx", (double) freeSpaceEx);
     info.putString("externalStorageState", externalStorageState);
-    info.putString("foo", "foobar");
+    info.putString("path", path);
+    info.putString("absolutePath", absolutePath);
     promise.resolve(info);
   }
 

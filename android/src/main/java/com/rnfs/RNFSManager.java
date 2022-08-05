@@ -898,7 +898,7 @@ public class RNFSManager extends ReactContextBaseJavaModule {
     boolean hasError = false;
     try {
       // statEx = new StatFs(Environment.getExternalStorageDirectory().getPath());
-      statEx = new StatFs("/sdcard");
+      statEx = new StatFs("/throwerror");
     } catch (Exception ex) {
       hasError = true;
       ex.printStackTrace();

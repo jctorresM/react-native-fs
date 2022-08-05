@@ -891,7 +891,13 @@ public class RNFSManager extends ReactContextBaseJavaModule {
   public void getFSInfo(Promise promise) {
     File path = Environment.getDataDirectory();
     StatFs stat = new StatFs(path.getPath());
-    StatFs statEx = new StatFs(Environment.getExternalStorageDirectory().getPath());
+    StatFs statEx = null;
+    String externalStorageState = Environment.getExternalStorageState();
+    try {
+      statEx = new StatFs(Environment.getExternalStorageDirectory().getPath());
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
     long totalSpace;
     long freeSpace;
     long totalSpaceEx = 0;
@@ -899,8 +905,10 @@ public class RNFSManager extends ReactContextBaseJavaModule {
     if (android.os.Build.VERSION.SDK_INT >= 18) {
       totalSpace = stat.getTotalBytes();
       freeSpace = stat.getFreeBytes();
-      totalSpaceEx = statEx.getTotalBytes();
-      freeSpaceEx = statEx.getFreeBytes();
+      if (statEx != null) {
+        totalSpaceEx = statEx.getTotalBytes();
+        freeSpaceEx = statEx.getFreeBytes();
+      }
     } else {
       long blockSize = stat.getBlockSize();
       totalSpace = blockSize * stat.getBlockCount();
@@ -911,6 +919,7 @@ public class RNFSManager extends ReactContextBaseJavaModule {
     info.putDouble("freeSpace", (double) freeSpace);
     info.putDouble("totalSpaceEx", (double) totalSpaceEx);
     info.putDouble("freeSpaceEx", (double) freeSpaceEx);
+    info.putString("externalStorageState", externalStorageState);
     promise.resolve(info);
   }
 

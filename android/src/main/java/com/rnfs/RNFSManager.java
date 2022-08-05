@@ -895,9 +895,12 @@ public class RNFSManager extends ReactContextBaseJavaModule {
     StatFs stat = new StatFs(path.getPath());
     StatFs statEx = null;
     String externalStorageState = Environment.getExternalStorageState();
+    boolean hasError = false;
     try {
-      statEx = new StatFs(Environment.getExternalStorageDirectory().getPath());
+      // statEx = new StatFs(Environment.getExternalStorageDirectory().getPath());
+      statEx = new StatFs("/sdcard");
     } catch (Exception ex) {
+      hasError = true;
       ex.printStackTrace();
     }
     long totalSpace;
@@ -924,6 +927,7 @@ public class RNFSManager extends ReactContextBaseJavaModule {
     info.putString("externalStorageState", externalStorageState);
     info.putString("path", pathStr);
     info.putString("absolutePath", absolutePath);
+    info.putString("hasError", String.valueOf(hasError));
     promise.resolve(info);
   }
 

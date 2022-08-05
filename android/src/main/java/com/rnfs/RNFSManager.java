@@ -920,6 +920,7 @@ public class RNFSManager extends ReactContextBaseJavaModule {
     info.putDouble("totalSpaceEx", (double) totalSpaceEx);
     info.putDouble("freeSpaceEx", (double) freeSpaceEx);
     info.putString("externalStorageState", externalStorageState);
+    info.putString("foo", "foobar");
     promise.resolve(info);
   }
 

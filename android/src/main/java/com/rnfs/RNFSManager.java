@@ -927,7 +927,7 @@ public class RNFSManager extends ReactContextBaseJavaModule {
     info.putString("externalStorageState", externalStorageState);
     info.putString("path", pathStr);
     info.putString("absolutePath", absolutePath);
-    info.putString("hasError", String.valueOf(hasError));
+    info.putBoolean("hasError", hasError);
     promise.resolve(info);
   }
 
